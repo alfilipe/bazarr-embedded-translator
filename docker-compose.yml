@@ -1,0 +1,18 @@
+services:
+
+  bazarr-embedded-translator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: bazarr-embedded-translator
+
+    ports:
+      - "9870:9870"
+
+    volumes:
+      - /mnt/user/TV Shows:/tv
+      - /mnt/user/Movies:/movies
+      - /mnt/user/appdata/bazarr-embedded-translator:/data
+
+    restart: unless-stopped
