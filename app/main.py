@@ -75,7 +75,7 @@ def extract(request: ExtractRequest):
     try:
         output = extractor.extract(
             mkv_file=request.file,
-            track_id=request.track_id,
+            track_info=request.track_info,
             output_file=request.output_file
         )
 
