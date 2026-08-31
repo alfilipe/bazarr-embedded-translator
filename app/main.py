@@ -16,7 +16,7 @@ extractor = SubtitleExtractor()
 
 class ExtractRequest(BaseModel):
     file: str
-    track_id: int
+    track_info: str
     output_file: str | None = None
 
 
