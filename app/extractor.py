@@ -6,7 +6,7 @@ from pathlib import Path
 
 class SubtitleExtractor:
     def __init__(self, output_dir=None):
-        if self.output_dir is not None:
+        if output_dir is not None:
             self.output_dir = Path(output_dir)
             self.output_dir.mkdir(parents=True, exist_ok=True)
 
