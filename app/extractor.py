@@ -100,7 +100,7 @@ class SubtitleExtractor:
             "mkvextract",
             str(mkv_path),
             "tracks",
-            f"{track_id}:{output_file}"
+            f"{trackinfo.id}:{output_file}"
         ]
 
         subprocess.run(
