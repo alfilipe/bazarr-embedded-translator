@@ -1,12 +1,14 @@
 import json
 import subprocess
+import os
 from pathlib import Path
 
 
 class SubtitleExtractor:
-    def __init__(self, output_dir="/data/output"):
-        self.output_dir = Path(output_dir)
-        self.output_dir.mkdir(parents=True, exist_ok=True)
+    def __init__(self, output_dir=None):
+        if self.output_file is not None:
+            self.output_dir = Path(output_dir)
+            self.output_dir.mkdir(parents=True, exist_ok=True)
 
     def inspect(self, mkv_file: str):
         """
@@ -58,7 +60,7 @@ class SubtitleExtractor:
     def extract(
         self,
         mkv_file: str,
-        track_id: int,
+        track_info: str,
         output_file: str | None = None
     ):
         """
@@ -72,13 +74,22 @@ class SubtitleExtractor:
                 f"MKV file not found: {mkv_file}"
             )
 
+        try:
+            trackinfo=json.loads(track_info)
+        except:
+            raise Exception(
+                f"malformat: {trackinfo}"
+            )
         if output_file is None:
             output_file = (
                 self.output_dir
-                / f"{mkv_path.stem}.track-{track_id}.ass"
+                / f"{mkv_path.stem}.{trackinfo.language_ietf}.ass"
             )
         else:
-            output_file = Path(output_file)
+            output_file = (
+                mkv_path.parent
+                / f"{mkv_path.stem}.{trackinfo.language_ietf}.ass"
+            )
 
         output_file.parent.mkdir(
             parents=True,
