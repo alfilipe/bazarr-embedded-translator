@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Form
 from pydantic import BaseModel
 
 from .extractor import SubtitleExtractor
@@ -61,7 +61,7 @@ def tracks(file: str):
 
 
 @app.post("/extract")
-def extract(request: ExtractRequest):
+def extract(request: ExtractRequest= Form()):
     """
     Extract a subtitle track from an MKV.
     """
