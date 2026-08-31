@@ -82,7 +82,7 @@ def extract(request: ExtractRequest):
         return {
             "status": "success",
             "input": request.file,
-            "track_id": request.track_id,
+            "track_info": request.track_info,
             "output": output
         }
 
