@@ -22,11 +22,11 @@ GET /health
 
 Example:
 
-curl http://localhost:9877/health
+curl http://localhost:9870/health
 
 ### List subtitle tracks
 
-GET /tracks?file=/media/movie/movie.mkv
+GET /tracks?file=/movies/movie.mkv
 
 ### Extract subtitle
 
@@ -35,7 +35,7 @@ POST /extract
 Example:
 
 {
-  "file": "/media/movie/movie.mkv",
+  "file": "/movie/movie.mkv",
   "track_id": 3
 }
 
@@ -43,11 +43,11 @@ Response:
 
 {
   "status": "success",
-  "input": "/media/movie/movie.mkv",
+  "input": "/movie/movie.mkv",
   "track_id": 3,
-  "output": "/data/output/movie.track-3.ass"
+  "output": "/movie/movie.en.ass"
 }
 
 ## Docker
 
-docker pull ghcr.io/USERNAME/bazarr-embedded-translator:latest
+docker pull ghcr.io/alfilipe/bazarr-embedded-translator:latest
