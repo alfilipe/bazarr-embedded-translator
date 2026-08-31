@@ -36,7 +36,7 @@ Example:
 
 {
   "file": "/movie/movie.mkv",
-  "track_id": 3
+  "track_info": '{"id":3, "codec":"SubStationAlpha", "language":"eng", "language_ietf":"en", "track_name":"Dialog - ENG", "default":true, "forced":true}'
 }
 
 Response:
@@ -44,7 +44,7 @@ Response:
 {
   "status": "success",
   "input": "/movie/movie.mkv",
-  "track_id": 3,
+  "track_id": '{"id":3, "codec":"SubStationAlpha", "language":"eng", "language_ietf":"en", "track_name":"Dialog - ENG", "default":true, "forced":true}',
   "output": "/movie/movie.en.ass"
 }
 
