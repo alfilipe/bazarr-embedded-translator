@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="back">
+    <a href="/?path={{ mkv_path.rsplit('/', 1)[0] | urlencode }}">
+        ← Voltar
+    </a>
+</div>
+<div class="card">
+    <div class="card-header">
+        🎬 {{ mkv }}
+    </div>
+    <div style="padding: 18px;">
+        <strong>Caminho:</strong>
+        <code>
+            /tv/{{ mkv_path }}
+        </code>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        📺 Tracks
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tipo</th>
+                <th>Idioma</th>
+                <th>Codec</th>
+                <th>Nome</th>
+                <th>Flags</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for track in tracks %}
+        <tr>
+            <td>
+                {{ track.id }}
+            </td>
+            <td>
+                {% if track.type == "video" %}
+                    🎬 Video
+
+                {% elif track.type == "audio" %}
+                    🔊 Audio
+
+                {% elif track.type == "subtitles" %}
+                    💬 Subtitle
+
+                {% else %}
+                    {{ track.type }}
+                {% endif %}
+            </td>
+            <td>
+                {{ track.language or "—" }}
+            </td>
+            <td>
+                {{ track.codec }}
+                {% if track.codec_id %}
+                    <br>
+                    <small>
+                        {{ track.codec_id }}
+                    </small>
+                {% endif %}
+            </td>
+            <td>
+                {{ track.name or "—" }}
+            </td>
+            <td>
+                {% if track.default %}
+                    <span class="badge">
+                        Default
+                    </span>
+                {% endif %}
+                {% if track.forced %}
+                    <span class="badge">
+                        Forced
+                    </span>
+                {% endif %}
+                {% if track.hearing_impaired %}
+                    <span class="badge">
+                        SDH
+                    </span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="card">
+    <div class="card-header">
+        💬 Legendas embutidas
+    </div>
+    {% if subtitles %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Idioma</th>
+                <th>Codec</th>
+                <th>Nome</th>
+                <th>Flags</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for subtitle in subtitles %}
+        <tr>
+            <td>
+                {{ subtitle.id }}
+            </td>
+            <td>
+                {% if subtitle.language.startswith("en") %}
+                    <span class="badge en">
+                        🇬🇧 {{ subtitle.language }}
+                    </span>
+                {% elif subtitle.language.startswith("pt") %}
+                    <span class="badge">
+                        🇵🇹 {{ subtitle.language }}
+                    </span>
+                {% else %}
+                    <span class="badge">
+                        {{ subtitle.language or "?" }}
+                    </span>
+                {% endif %}
+            </td>
+            <td>
+                {% if
+                    "ASS" in subtitle.codec_id
+                    or "SSA" in subtitle.codec_id
+                %}
+                    <span class="badge ass">
+                        ASS / SSA
+                    </span>
+                {% else %}
+                    {{ subtitle.codec }}
+                {% endif %}
+            </td>
+            <td>
+                {{ subtitle.name or "—" }}
+            </td>
+            <td>
+                {% if subtitle.default %}
+                    <span class="badge">
+                        Default
+                    </span>
+                {% endif %}
+                {% if subtitle.forced %}
+                    <span class="badge">
+                        Forced
+                    </span>
+                {% endif %}
+                {% if subtitle.hearing_impaired %}
+                    <span class="badge">
+                        SDH
+                    </span>
+                {% endif %}
+            </td>
+            <td>
+                <form
+                    method="post"
+                    action="/extract?path={{ mkv_path | urlencode }}"
+                >
+                    <input
+                        type="hidden"
+                        name="track_id"
+                        value="{{ subtitle.id }}"
+                    >
+                    <button
+                        type="submit"
+                        onclick="
+                            return confirm(
+                                'Extrair esta legenda?'
+                            );
+                        "
+                    >
+                        Extrair
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <div class="empty">
+            Nenhuma legenda embutida encontrada.
+        </div>
+    {% endif %}
+</div>
+<div class="card">
+    <div class="card-header">
+        📁 Legendas externas
+    </div>
+    {% if external_subtitles %}
+        {% for subtitle in external_subtitles %}
+        <div class="item">
+            <div class="item-name">
+                💬 {{ subtitle.name }}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty">
+            Nenhuma legenda externa encontrada.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
