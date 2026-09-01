@@ -51,6 +51,7 @@ class SubtitleExtractor:
                 "language": properties.get("language"),
                 "language_ietf": properties.get("language_ietf"),
                 "track_name": properties.get("track_name"),
+                "num_index_entries": properties.get("num_index_entries"),
                 "default": properties.get("default_track"),
                 "forced": properties.get("forced_track"),
             })
@@ -78,17 +79,17 @@ class SubtitleExtractor:
             trackinfo=json.loads(track_info)
         except:
             raise Exception(
-                f"malformat: {trackinfo}"
+                f"malformat: {track_info}"
             )
         if output_file is None:
             output_file = (
                 self.output_dir
-                / f"{mkv_path.stem}.{trackinfo.language_ietf}.ass"
+                / f"{mkv_path.stem}.{trackinfo['language_ietf']}.{trackinfo['track_name']}.ass"
             )
         else:
             output_file = (
                 mkv_path.parent
-                / f"{mkv_path.stem}.{trackinfo.language_ietf}.ass"
+                / f"{mkv_path.stem}.{trackinfo['language_ietf']}.{trackinfo['track_name']}.ass"
             )
 
         output_file.parent.mkdir(
@@ -100,7 +101,7 @@ class SubtitleExtractor:
             "mkvextract",
             str(mkv_path),
             "tracks",
-            f"{trackinfo.id}:{output_file}"
+            f"{trackinfo['id']}:{output_file}"
         ]
 
         subprocess.run(
