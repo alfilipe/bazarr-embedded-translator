@@ -83,14 +83,11 @@ class SubtitleExtractor:
             )
         if output_file is None:
             output_file = (
-                self.output_dir
-                / f"{mkv_path.stem}.{trackinfo['language_ietf']}.{trackinfo['track_name']}.ass"
-            )
-        else:
-            output_file = (
                 mkv_path.parent
                 / f"{mkv_path.stem}.{trackinfo['language_ietf']}.{trackinfo['track_name']}.ass"
             )
+        else:
+            output_file = Path(output_file)
 
         output_file.parent.mkdir(
             parents=True,
