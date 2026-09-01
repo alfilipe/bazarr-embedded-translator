@@ -18,8 +18,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app ./app
 
-RUN mkdir -p /data/input /data/output
-
 EXPOSE 9870
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "9870"]
