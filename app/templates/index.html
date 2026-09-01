@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="breadcrumbs">
+    {% for breadcrumb in breadcrumbs %}
+        {% if not loop.first %}
+            <span>/</span>
+        {% endif %}
+        <a href="/?path={{ breadcrumb.path | urlencode }}">
+            {{ breadcrumb.name }}
+        </a>
+    {% endfor %}
+</div>
+{% if parent is not none %}
+<div class="back">
+    <a href="/?path={{ parent | urlencode }}">
+        ← Voltar
+    </a>
+</div>
+{% endif %}
+<div class="card">
+    <div class="card-header">
+        📁 Conteúdo
+    </div>
+    {% if entries %}
+        {% for entry in entries %}
+        <div class="item">
+            <div class="item-name">
+                {% if entry.is_directory %}
+                    📁
+                    <a href="/?path={{ entry.path | urlencode }}">
+                        {{ entry.name }}
+                    </a>
+                {% else %}
+                    {% if entry.extension == ".mkv" %}
+                        🎬
+                    {% else %}
+                        💬
+                    {% endif %}
+                    {{ entry.name }}
+                {% endif %}
+            </div>
+            {% if entry.extension == ".mkv" %}
+                <a
+                    href="/mkv?path={{ entry.path | urlencode }}"
+                >
+                    <button>
+                        Ver MKV
+                    </button>
+                </a>
+            {% elif entry.is_directory %}
+                <a href="/?path={{ entry.path | urlencode }}">
+                    →
+                </a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty">
+            Esta pasta está vazia.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
