@@ -76,11 +76,11 @@ class SubtitleService:
         ).upper()
         if track.get("forced_track", False,):
             flag=".forced"
-#        if codec_id in self.SUPPORTED_CODECS:
-#
-#            return self.SUPPORTED_CODECS[
-#                codec_id
-#            ]
+        if codec_id in self.SUPPORTED_CODECS:
+
+            return flag+self.SUPPORTED_CODECS[
+                codec_id
+            ]
 
         codec = (
             track.get(
