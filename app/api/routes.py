@@ -185,7 +185,6 @@ def extract_subtitle(
         subtitle_service.extract(
             mkv_path,
             track_id,
-            forced,
         )
 
     except FileExistsError as exc:
