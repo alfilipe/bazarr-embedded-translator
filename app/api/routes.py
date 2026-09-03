@@ -165,7 +165,6 @@ def mkv_details(
 def extract_subtitle(
     path: str,
     track_id: int = Form(...),
-    forced: bool = Form(...),
 ):
 
     mkv_path = (
