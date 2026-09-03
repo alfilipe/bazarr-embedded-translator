@@ -101,6 +101,7 @@
                 <th>Idioma</th>
                 <th>Codec</th>
                 <th>Nome</th>
+                <th>Registos</th>
                 <th>Flags</th>
                 <th>Ação</th>
             </tr>
@@ -142,6 +143,9 @@
                 {{ subtitle.name or "—" }}
             </td>
             <td>
+                {{ subtitle.index_entries }}
+            </td>
+            <td>
                 {% if subtitle.default %}
                     <span class="badge">
                         Default
@@ -167,6 +171,11 @@
                         type="hidden"
                         name="track_id"
                         value="{{ subtitle.id }}"
+                    >
+                    <input
+                        type="hidden"
+                        name="forced"
+                        value="{{ subtitle.forced }}"
                     >
                     <button
                         type="submit"
