@@ -15,6 +15,8 @@ class SubtitleTrack(BaseModel):
 
     name: str = ""
 
+    index_entries: str = ""
+
     default: bool = False
 
     forced: bool = False
@@ -40,3 +42,5 @@ class ExtractionResult(BaseModel):
     output_file: Optional[str] = None
 
     track_id: Optional[int] = None
+
+    forced: Optional[bool] = None
