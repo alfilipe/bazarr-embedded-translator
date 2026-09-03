@@ -66,7 +66,7 @@ class SubtitleService:
         self,
         track: dict,
     ) -> str:
-
+        flag=""
         codec_id = (
             track.get(
                 "codec_id",
@@ -74,12 +74,13 @@ class SubtitleService:
             )
             or ""
         ).upper()
-
-        if codec_id in self.SUPPORTED_CODECS:
-
-            return self.SUPPORTED_CODECS[
-                codec_id
-            ]
+        if track.get("forced_track", false,):
+            flag=".forced"
+#        if codec_id in self.SUPPORTED_CODECS:
+#
+#            return self.SUPPORTED_CODECS[
+#                codec_id
+#            ]
 
         codec = (
             track.get(
@@ -90,16 +91,16 @@ class SubtitleService:
         ).lower()
 
         if "ass" in codec:
-            return ".ass"
+            return flag+".ass"
 
         if "ssa" in codec:
-            return ".ssa"
+            return flag+".ssa"
 
         if (
             "subrip" in codec
             or "srt" in codec
         ):
-            return ".srt"
+            return flag+".srt"
 
         raise ValueError(
             "Unsupported subtitle codec: "
