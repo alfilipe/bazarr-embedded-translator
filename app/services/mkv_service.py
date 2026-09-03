@@ -106,6 +106,10 @@ class MkvService:
                     "forced_track",
                     False,
                 ),
+                "index_entries": properties.get(
+                    "num_index_entries",
+                    False,
+                ),
                 "hearing_impaired": properties.get(
                     "hearing_impaired",
                     False,
