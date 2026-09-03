@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from pprint import pprint
 from .mkv_service import MkvService
 
 
@@ -74,6 +74,8 @@ class SubtitleService:
             )
             or ""
         ).upper()
+        forced=(track.get("forced_track", False,) or False)
+        pprint(forced)
         if track.get("forced_track", False,):
             flag=".forced"
         if codec_id in self.SUPPORTED_CODECS:
