@@ -74,9 +74,8 @@ class SubtitleService:
             )
             or ""
         ).upper()
-        forced=(track.get("forced_track", False,) or False)
-        pprint(forced)
-        if track.get("forced_track", False,):
+        forced=(track.get("forced", False,) or False)
+        if forced:
             flag=".forced"
         if codec_id in self.SUPPORTED_CODECS:
 
